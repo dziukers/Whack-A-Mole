@@ -28,7 +28,7 @@ nav {
 }
 nav > * {
   font-size: 5em;
-  margin:10px;
+  margin-top:10px;
 }
 
 .start {
@@ -109,6 +109,11 @@ transform: scale(1)
 @media (max-width:800px) {
   body{
     font-size: 6px;
+    max-height:100vh;
+  }
+  h1{
+    font-size:8em;
+    margin-top:5px;
   }
   nav{
     width:100%;
@@ -119,5 +124,9 @@ transform: scale(1)
   .hole:after {
     bottom:-20px;
   }
-
+  .timer {
+    margin-top:10px;
+    font-size:8em;
+    text-align: center;
+  }
 }
