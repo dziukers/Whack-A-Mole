@@ -81,7 +81,9 @@
 
   function displayScore() {
     setTimeout(() => {
-      timer.textContent = `Your score: ${score}`;
+      if(window.matchMedia("(min-width: 600px)").matches){
+        timer.textContent = `Your score: ${score}`;
+    }
         if(record < score){
           localStorage.setItem('record', score);
           record = score;
@@ -128,12 +130,17 @@
   }
 
   function displayTimer(gameTime) {
-    let seconds = (gameTime / 1000);
-    timer.textContent = `Time left: ${seconds}`;
+    let sourceDisplay = timer;
+    if(window.matchMedia("(max-width: 600px)").matches){
+       sourceDisplay = startButton;
+    }
+    let seconds = (gameTime / 1000)  
+    sourceDisplay.textContent = `Time left: ${seconds}`;
     seconds--;
     countdown = setInterval(() => {
-      timer.textContent = `Time left: ${seconds--}`;
+      sourceDisplay.textContent = `Time left: ${seconds--}`;
       if(seconds < 0){
+        startButton.textContent = 'start!'
         clearInterval(countdown);
       }
     }, 1000);
