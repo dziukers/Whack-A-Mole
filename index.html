@@ -162,6 +162,8 @@ function displayRecord() {
 
 
   function bonk(e) {
+    console.log("move");
+    
     if(!e.isTrusted) return;
     score++;
     this.classList.remove('up');
