@@ -140,8 +140,11 @@ function displayRecord() {
     const time = randomTime(start,end);
     const hole = randomHole(holes);
     const mole = hole.querySelector('.mole');
-    mole.addEventListener('click', bonk, {once:true})
-    mole.addEventListener('touchstart', bonk, {once:true})
+    if(window.matchMedia("(max-width: 600px)").matches){
+      mole.addEventListener('touchstart', bonk, {once:true})
+    }else {
+      mole.addEventListener('click', bonk, {once:true})
+    }
     hole.classList.add('up');
     setTimeout(() => {
       hole.classList.remove('up');
