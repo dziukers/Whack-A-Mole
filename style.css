@@ -167,6 +167,7 @@ outline:0;
   }
   .hole:after {
     bottom:-20px;
+    height:50px;
   }
   .timer {
     margin-top:10px;
