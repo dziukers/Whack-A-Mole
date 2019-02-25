@@ -87,8 +87,6 @@
   const recordInfo = document.querySelector('.record');
   let countdown;
   
-console.log(`record${currentLevel}`);
-
   function randomTime(min, max) {
     return Math.round(Math.random() * (max - min) + min);
   }
@@ -162,8 +160,6 @@ function displayRecord() {
 
 
   function bonk(e) {
-    console.log("move");
-    
     if(!e.isTrusted) return;
     score++;
     this.classList.remove('up');
