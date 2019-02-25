@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class='levels-modal'>
+    <h3 class="levels-title">Choose difficulty level</h3>
+    
+    <button data-level='easy' class="level">Easy</button>
+    <button data-level='medium' class="level">Medium</button>
+    <button data-level='hard' class="level">Hard</button>
+  </div>
   <h1>Whack-a-mole! <span class="score">0</span></h1>
   <nav>
     <button class='start' onClick="startGame()">Start!</button>
@@ -38,7 +45,35 @@
  
 
 <script>
-  window.onload = displayRecord;
+  let start, end, currentLevel;
+  let record =  0;
+
+    const modal = document.querySelector('.levels-modal');
+    const levels = modal.querySelectorAll('.level');
+    const choosenLevel = document.querySelector('.choosen-level');
+
+    modal.classList.add('levels-modal-active');
+    levels.forEach(level => level.addEventListener('click', function() {
+      currentLevel = this.dataset.level;
+      switch (this.dataset.level) {
+        case 'easy':
+          start = 400;
+          end = 1000;
+          break;
+        case 'medium': 
+          start = 200;
+          end = 800;
+          break;
+        case 'hard':
+          start = 100;
+          end = 500;
+          break;
+      }
+      modal.classList.remove('levels-modal-active');
+      record = localStorage.getItem(`record${currentLevel}`) || 0;
+      displayRecord();   
+    }))
+
   const holes = document.querySelectorAll('.hole');
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
@@ -51,7 +86,8 @@
   const timer = document.querySelector('.timer');
   const recordInfo = document.querySelector('.record');
   let countdown;
-  let record = localStorage.getItem('record') || 0;
+  
+console.log(`record${currentLevel}`);
 
   function randomTime(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -85,7 +121,7 @@
         timer.textContent = `Your score: ${score}`;
     }
         if(record < score){
-          localStorage.setItem('record', score);
+          localStorage.setItem(`record${currentLevel}`, score);
           record = score;
           recordInfo.textContent = `New record: ${record}`;
           recordInfo.style.color = 'rgb(255,0,0)'
@@ -96,16 +132,16 @@
     , 1000)
   }
 
-  function displayRecord() {
+function displayRecord() {
     recordInfo.style.color = 'rgb(0,0,0)'
-    recordInfo.textContent = `Your record: ${record}`;
+    recordInfo.innerHTML = `Your record<sub class='choosen-level'>${currentLevel}</sub>: ${record}`;
   }
   function peep() {
-    const time = randomTime(200,1000);
+    const time = randomTime(start,end);
     const hole = randomHole(holes);
     const mole = hole.querySelector('.mole');
     mole.addEventListener('click', bonk, {once:true})
-
+    mole.addEventListener('touchstart', bonk, {once:true})
     hole.classList.add('up');
     setTimeout(() => {
       hole.classList.remove('up');
@@ -126,7 +162,7 @@
     if(!e.isTrusted) return;
     score++;
     this.classList.remove('up');
-    scoreBoard.textContent = score;
+    scoreBoard.innerText = score;
   }
 
   function displayTimer(gameTime) {
@@ -145,7 +181,6 @@
       }
     }, 1000);
   }
-  
 </script>
 </body>
 </html>
